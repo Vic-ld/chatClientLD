@@ -5,7 +5,11 @@
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    loginDialog lg;
-    lg.show();
+    int total = 4;
+    std::vector<loginDialog> lg(total);
+    for (int i = 0; i < total; ++i)
+    {
+        lg.at(i).show();
+    }
     return a.exec();
 }

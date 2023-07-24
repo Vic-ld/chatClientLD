@@ -24,10 +24,18 @@
    </property>
    <layout class="QGridLayout" name="gridLayout">
     <item row="0" column="1">
-     <widget class="QLineEdit" name="ipLine"/>
+     <widget class="QLineEdit" name="ipLine">
+      <property name="text">
+       <string>127.0.0.1</string>
+      </property>
+     </widget>
     </item>
     <item row="1" column="1">
-     <widget class="QLineEdit" name="portLine"/>
+     <widget class="QLineEdit" name="portLine">
+      <property name="text">
+       <string>9527</string>
+      </property>
+     </widget>
     </item>
     <item row="2" column="0">
      <widget class="QLabel" name="label_3">
@@ -37,7 +45,11 @@
      </widget>
     </item>
     <item row="2" column="1">
-     <widget class="QLineEdit" name="uNameLine"/>
+     <widget class="QLineEdit" name="uNameLine">
+      <property name="text">
+       <string>ld</string>
+      </property>
+     </widget>
     </item>
     <item row="0" column="0">
      <widget class="QLabel" name="label">
@@ -54,7 +66,11 @@
      </widget>
     </item>
     <item row="3" column="1">
-     <widget class="QLineEdit" name="pwdLine"/>
+     <widget class="QLineEdit" name="pwdLine">
+      <property name="text">
+       <string>111</string>
+      </property>
+     </widget>
     </item>
     <item row="1" column="0">
      <widget class="QLabel" name="label_2">
@@ -65,7 +81,7 @@
     </item>
    </layout>
   </widget>
-  <widget class="QWidget" name="">
+  <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
      <x>70</x>

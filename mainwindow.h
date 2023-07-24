@@ -6,6 +6,8 @@
 #include <QDialog>
 #include <QHostAddress>
 #include "client.h"
+#include "message.h"
+#include "privatedialog.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -18,10 +20,14 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
+    void setTCPConfig(QString addr, unsigned short port, QString id);
 
 private slots:
-    void on_pushButton_clicked();
-
+    void appendMessage(const QString &message);
+    void updateRoomInfo(QStringList  &memberList,int count);
+    void on_exitBtn_clicked();
+    void on_sendBtn_clicked();
+    void onMemListContextMenu(const QPoint&);
 private:
     Ui::MainWindow *ui;
     QString m_sUserName;

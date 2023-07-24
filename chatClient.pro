@@ -12,16 +12,21 @@ SOURCES += \
     client.cpp \
     logindialog.cpp \
     main.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    message.cpp \
+    privatedialog.cpp
 
 HEADERS += \
     client.h \
     logindialog.h \
-    mainwindow.h
+    mainwindow.h \
+    message.h \
+    privatedialog.h
 
 FORMS += \
     logindialog.ui \
-    mainwindow.ui
+    mainwindow.ui \
+    privatedialog.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

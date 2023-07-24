@@ -14,7 +14,7 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QWidget" name="">
+   <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
       <x>141</x>
@@ -27,10 +27,10 @@
      <item>
       <layout class="QHBoxLayout" name="horizontalLayout_3" stretch="3,1">
        <item>
-        <widget class="QTextEdit" name="textEdit_2"/>
+        <widget class="QTextEdit" name="outputEdit"/>
        </item>
        <item>
-        <widget class="QListView" name="listView"/>
+        <widget class="QListView" name="memList"/>
        </item>
       </layout>
      </item>
@@ -73,7 +73,7 @@
       </layout>
      </item>
      <item>
-      <widget class="QTextEdit" name="textEdit"/>
+      <widget class="QTextEdit" name="inputEdit"/>
      </item>
      <item>
       <layout class="QHBoxLayout" name="horizontalLayout_2">
@@ -91,14 +91,14 @@
         </spacer>
        </item>
        <item>
-        <widget class="QPushButton" name="pushButton">
+        <widget class="QPushButton" name="exitBtn">
          <property name="text">
           <string>退出</string>
          </property>
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="pushButton_2">
+        <widget class="QPushButton" name="sendBtn">
          <property name="text">
           <string>发送</string>
          </property>
