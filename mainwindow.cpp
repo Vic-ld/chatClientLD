@@ -58,6 +58,9 @@ void MainWindow::on_exitBtn_clicked()
 void MainWindow::on_sendBtn_clicked()
 {
     m_Client->sendPub(ui->inputEdit->toPlainText());
+//    m_Client->sendPub(ui->inputEdit->toPlainText());
+//    m_Client->sendPub(ui->inputEdit->toPlainText());
+
     ui->inputEdit->clear();
 }
 
