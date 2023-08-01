@@ -1,4 +1,5 @@
 #include "client.h"
+#include "qapplication.h"
 #include <winsock2.h>
 
 
@@ -25,6 +26,7 @@ void Client::connectToHost()
     else
     {
         QMessageBox::critical(qobject_cast<QWidget*>(parent()), "错误", "连接失败", QMessageBox::Ok);
+        qApp->exit();
     }
 }
 
@@ -44,9 +46,9 @@ void Client::sendPri(const QString &msg, const QString name)
     m_msg.target = name.toStdString();
     m_msg.msg = msg.toStdString();
 
-    send(msg.toStdString().c_str());
+   // send(msg.toStdString().c_str());
+    send(m_msg.toJsonStr().c_str());
 
-    //m_tcpSocket->write(m_msg.toJsonStr().c_str());
 }
 
 void Client::send(const char *msg)
@@ -62,7 +64,7 @@ void Client::send(const char *msg)
 //    for(int i =0;i<len;i++)
 //        qDebug() << "i = " << i << buf[i] ;
     m_tcpSocket->write(buf,len+sizeof(int));
-    m_tcpSocket->write(buf,len+sizeof(int));
+   // m_tcpSocket->write(buf,len+sizeof(int));
     delete[] buf;
 }
 
@@ -122,8 +124,12 @@ void Client::handleMsg()
     case 1://群发
     {
         QString message;
-        message = message + "昵称:" + QString::fromStdString(m_msg.name) +"\n"
-                +QString::fromStdString(m_msg.msg);
+        QDateTime currentDateTime = QDateTime::currentDateTime();
+        QString currentTimeStr = currentDateTime.toString("yyyy-MM-dd hh:mm:ss");
+
+        message = message + "昵称:" + QString::fromStdString(m_msg.name) + "   "
+                + currentTimeStr +"\n"
+                + QString::fromStdString(m_msg.msg);
         emit messageReceived(message);
         break;
     }
@@ -131,8 +137,11 @@ void Client::handleMsg()
     case 2://私聊
     {
         QString message;
-        message = message + "[私聊消息]昵称:" + QString::fromStdString(m_msg.name) +"\n"
-                +QString::fromStdString(m_msg.msg);
+        QDateTime currentDateTime = QDateTime::currentDateTime();
+        QString currentTimeStr = currentDateTime.toString("yyyy-MM-dd hh:mm:ss");
+        message = message + "[私聊消息]昵称:" + QString::fromStdString(m_msg.name) + "   "
+                + currentTimeStr+"\n"
+                + QString::fromStdString(m_msg.msg);
         emit messageReceived(message);
         break;
     }

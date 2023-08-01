@@ -27,5 +27,6 @@ void loginDialog::on_confirmBtn_clicked()
     QString name = ui->uNameLine->text();
     mainWindow->setTCPConfig(addr, port, name);
     mainWindow->show();
+    //delete mainWindow;
 }
 
