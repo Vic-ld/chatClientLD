@@ -1,5 +1,5 @@
 #include "client.h"
-
+#include <winsock2.h>
 
 
 Client::Client(QObject *parent, QString addr, unsigned short port,QString name)
@@ -33,16 +33,37 @@ void Client::sendPub(const QString &msg)
     m_msg.flag = 1;
     m_msg.name = m_name.toStdString();
     m_msg.msg = msg.toStdString();
-    m_tcpSocket->write(m_msg.toJsonStr().c_str());
+    //m_tcpSocket->write(m_msg.toJsonStr().c_str());
+    send(m_msg.toJsonStr().c_str());
 }
 
 void Client::sendPri(const QString &msg, const QString name)
 {
     m_msg.flag = 2;
     m_msg.name = m_name.toStdString();
-    m_msg.msg = msg.toStdString();
     m_msg.target = name.toStdString();
-    m_tcpSocket->write(m_msg.toJsonStr().c_str());
+    m_msg.msg = msg.toStdString();
+
+    send(msg.toStdString().c_str());
+
+    //m_tcpSocket->write(m_msg.toJsonStr().c_str());
+}
+
+void Client::send(const char *msg)
+{
+    int len = strlen(msg);
+    char *buf = new char[len+sizeof(int)]();
+    qDebug() << "send len:" << len;
+    qDebug() << "send msg:" << msg;
+    int netlen = htonl(len);
+    memcpy(buf,&netlen,sizeof(int));
+    memcpy(buf+sizeof(int),msg,len);
+    qDebug() << "send buf:" << buf;
+//    for(int i =0;i<len;i++)
+//        qDebug() << "i = " << i << buf[i] ;
+    m_tcpSocket->write(buf,len+sizeof(int));
+    m_tcpSocket->write(buf,len+sizeof(int));
+    delete[] buf;
 }
 
 void Client::stopTcp()
@@ -54,14 +75,26 @@ void Client::setId()
 {
     m_msg.name = m_name.toStdString();
     m_msg.flag = 0;
-    m_tcpSocket->write(m_msg.toJsonStr().c_str());
+    send(m_msg.toJsonStr().c_str());
 }
 
 void Client::receivedData()
 {
-    QByteArray data = m_tcpSocket->readAll();
-    m_msg.fromStr(data);
-    handleMsg();
+    while( m_tcpSocket->bytesAvailable())
+    {
+        int netlen;
+        int ret = m_tcpSocket->read((char *)&netlen,sizeof(int));
+        //qDebug() << __func__ << data;
+        int len = ntohl(netlen);
+        qDebug() << __func__ << len;
+
+        char* data = new char[len+1];
+        ret =  m_tcpSocket->read(data,len);
+        data[len] = '\0';
+        qDebug() << __func__ << data;
+        m_msg.fromStr(data);
+        handleMsg();
+    }
 }
 
 void Client::disconnectedFromServer()

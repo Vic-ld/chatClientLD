@@ -9,9 +9,8 @@
 #include <QMessageBox>
 #include <QJsonArray>
 #include <QMenu>
-
+#include <qdatastream.h>
 #include "message.h"
-
 class Client : public QObject
 {
     Q_OBJECT
@@ -22,7 +21,7 @@ public:
 
     void sendPub(const QString &msg);
     void sendPri(const QString &msg,const QString name);
-
+    void send(const char*);
     void stopTcp();
     QString name() const;
     void setName(const QString &newName);
